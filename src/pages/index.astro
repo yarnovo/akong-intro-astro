@@ -51,17 +51,10 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         />
       </div>
 
-      <!-- 文字稿 (跟音频紧 · 同信息层) -->
-      {transcript && (
-        <div class="mt-6 w-full max-w-md text-left text-sm leading-relaxed text-muted-foreground whitespace-pre-line" data-testid="transcript">
-          {transcript}
-        </div>
-      )}
-
-      <!-- 主 CTA (跟文字稿稍隔 · 决定行动) -->
+      <!-- 主 CTA (跟音频自然衔接 · 听完→聊) -->
       <a
         href={config.chat_url}
-        class="mt-10 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
+        class="mt-8 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
         data-testid="cta-chat"
       >
         {config.cta_label}
