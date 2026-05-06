@@ -1,0 +1,89 @@
+name: deploy-all-intros
+on:
+  push:
+    branches: [main]
+    paths:
+      - "src/**"
+      - "astro.config.mjs"
+      - "package.json"
+      - ".github/workflows/deploy-all.yml"
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { repo: mail-dayou-intro,        slug: dayou,    bucket: agentaily-mail-intro,              domain: m.mail.agentaily.com }
+          - { repo: hongniang-xiaoxi-intro,  slug: xiaoxi,   bucket: agentaily-hongniang-m,             domain: m.hongniang.agentaily.com }
+          - { repo: hongniang-xiaoqiao-intro,slug: xiaoqiao, bucket: agentaily-hongniang-xiaoqiao-m,    domain: m.xiaoqiao.hongniang.agentaily.com }
+          - { repo: studio-xiaohua-intro,    slug: xiaohua,  bucket: agentaily-xiaohua-m,               domain: m.xiaohua.agentaily.com }
+          - { repo: kb-xiaozhi-intro,        slug: xiaozhi,  bucket: agentaily-xiaozhi-m,               domain: m.xiaozhi.agentaily.com }
+          - { repo: cs-xiaoke-intro,         slug: xiaoke,   bucket: agentaily-xiaoke-m,                domain: m.xiaoke.agentaily.com }
+    name: deploy ${{ matrix.domain }}
+    steps:
+      - name: Checkout astro template
+        uses: actions/checkout@v4
+
+      - name: Checkout intro repo (config + audio)
+        uses: actions/checkout@v4
+        with:
+          repository: yarnovo/${{ matrix.repo }}
+          path: __intro
+
+      - name: Checkout akong-avatars (svg)
+        uses: actions/checkout@v4
+        with:
+          repository: yarnovo/akong-avatars
+          path: __avatars
+
+      - name: Inject config + audio + transcript + avatar
+        run: |
+          mkdir -p public
+          cp __intro/intro.config.json         public/intro.config.json
+          cp __intro/intro/audio/intro-zh.mp3  public/intro-zh.mp3
+          cp __intro/intro/text/intro-zh.md    public/transcript.md
+          cp __avatars/avatars/${{ matrix.slug }}.svg public/avatar.svg
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with: { version: 10 }
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with: { node-version: 22 }
+
+      - name: pnpm install
+        run: pnpm install --no-frozen-lockfile
+
+      - name: astro build
+        run: pnpm build
+
+      - name: Install ossutil
+        run: |
+          curl -o ossutil.zip https://gosspublic.alicdn.com/ossutil/v2/2.1.4/ossutil-2.1.4-linux-amd64.zip
+          unzip -q ossutil.zip
+          sudo mv ossutil-2.1.4-linux-amd64/ossutil /usr/local/bin/
+          ossutil version
+
+      - name: Deploy to OSS bucket
+        env:
+          OSS_ACCESS_KEY_ID: ${{ secrets.OSS_ACCESS_KEY_ID }}
+          OSS_ACCESS_KEY_SECRET: ${{ secrets.OSS_ACCESS_KEY_SECRET }}
+        run: |
+          ossutil cp dist/ oss://${{ matrix.bucket }}/ -r -f \
+            --endpoint oss-cn-hangzhou.aliyuncs.com \
+            --access-key-id "$OSS_ACCESS_KEY_ID" \
+            --access-key-secret "$OSS_ACCESS_KEY_SECRET" \
+            --cache-control "public, max-age=300, must-revalidate"
+          ossutil sync dist/ oss://${{ matrix.bucket }}/ \
+            --endpoint oss-cn-hangzhou.aliyuncs.com \
+            --access-key-id "$OSS_ACCESS_KEY_ID" \
+            --access-key-secret "$OSS_ACCESS_KEY_SECRET" \
+            --delete --update
+
+      - name: Verify
+        run: |
+          curl -sSL "https://${{ matrix.domain }}/?cb=$RANDOM" -o /dev/null -w "✓ ${{ matrix.domain }} HTTP %{http_code}\n"
