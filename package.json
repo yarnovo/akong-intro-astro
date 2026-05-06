@@ -1,0 +1,27 @@
+{
+  "name": "@akong/intro-astro",
+  "version": "0.1.0",
+  "private": true,
+  "description": "阿空 intro 共享 Astro template · React island · 营销静态站",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@akong/ui-react": "file:../akong-ui-react",
+    "@astrojs/react": "^4.1.2",
+    "@tailwindcss/vite": "^4.2.4",
+    "astro": "^5.1.1",
+    "lucide-react": "^0.469.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwindcss": "^4.2.4"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^5.7.2"
+  }
+}

@@ -1,0 +1,84 @@
+---
+/**
+ * intro 页 · 通用 template
+ *
+ * 数据源: public/intro.config.json (各 intro 仓 build 时 cp 进来)
+ * 静态资源: public/intro-zh.mp3 · public/avatar.svg · public/transcript.md
+ *
+ * 渲染: 99% 静态 HTML (0 JS) · 唯一 React island = AudioPlayer (client:load)
+ */
+import "../styles/shadcn.css"
+import { AudioPlayer } from "../components/AudioPlayer"
+import fs from "node:fs"
+import path from "node:path"
+
+const publicDir = path.resolve("./public")
+const config = JSON.parse(fs.readFileSync(path.join(publicDir, "intro.config.json"), "utf-8"))
+
+const transcriptPath = path.join(publicDir, "transcript.md")
+const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPath, "utf-8") : ""
+const avatarPath = path.join(publicDir, "avatar.svg")
+const avatarSvg = fs.existsSync(avatarPath) ? fs.readFileSync(avatarPath, "utf-8") : ""
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content={config.accent} />
+    <title>{config.name} · {config.role}</title>
+    <meta name="description" content={config.role_long} />
+  </head>
+  <body class="bg-background text-foreground">
+    <main class="max-w-md mx-auto px-4 py-8 flex flex-col gap-6">
+      <!-- 头像 -->
+      <div class="flex justify-center">
+        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-border" set:html={avatarSvg} />
+      </div>
+
+      <!-- 名 + 角色 -->
+      <div class="text-center space-y-1">
+        <h1 class="text-2xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
+        <p class="text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
+      </div>
+
+      <!-- 自介音频 (React island) -->
+      <AudioPlayer
+        client:load
+        src={config.mp3_url}
+        label={`听${config.name_short}的自我介绍`}
+      />
+
+      <!-- 文字稿 -->
+      {transcript && (
+        <div class="text-sm leading-relaxed text-foreground/85 whitespace-pre-line border-t border-border pt-4" data-testid="transcript">
+          {transcript}
+        </div>
+      )}
+
+      <!-- 主 CTA · 跳 chat -->
+      <a
+        href={config.chat_url}
+        class="block w-full text-center px-4 py-3 bg-primary text-primary-foreground rounded-lg font-medium hover:opacity-90 transition-opacity"
+        data-testid="cta-chat"
+      >
+        {config.cta_label}
+      </a>
+
+      <!-- 微信扫码加群 (config 有 qrcode_url 才渲染) -->
+      {config.qrcode_url && (
+        <div class="flex flex-col items-center gap-2 pt-4 border-t border-border">
+          <p class="text-sm font-medium">{config.qrcode_label}</p>
+          {config.qrcode_sub && <p class="text-xs text-muted-foreground">{config.qrcode_sub}</p>}
+          <img src={config.qrcode_url} alt="加群二维码" class="w-40 h-40 rounded border border-border" />
+        </div>
+      )}
+
+      <!-- footer -->
+      <footer class="text-center text-xs text-muted-foreground pt-6 border-t border-border" data-testid="footer">
+        {config.footer}
+      </footer>
+    </main>
+  </body>
+</html>
