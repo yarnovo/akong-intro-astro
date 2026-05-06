@@ -51,11 +51,12 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         label={`听${config.name_short}的自我介绍`}
       />
 
-      <!-- 文字稿 (默认收起 · HTML5 details 0 JS · 点击展开) -->
+      <!-- 文字稿 (默认收起 · HTML5 details 0 JS · 箭头随 open 切 ▸/▾) -->
       {transcript && (
-        <details class="w-full max-w-md text-left mt-2" data-testid="transcript-toggle">
+        <details class="group w-full max-w-md text-left mt-2" data-testid="transcript-toggle">
           <summary class="text-sm text-muted-foreground cursor-pointer list-none flex items-center gap-1 select-none justify-center">
-            <span>▸</span>
+            <span class="hidden group-open:inline">▾</span>
+            <span class="inline group-open:hidden">▸</span>
             <span>看文字稿 (听不方便时)</span>
           </summary>
           <div class="text-sm leading-relaxed text-foreground/85 whitespace-pre-line mt-4 prose prose-sm" data-testid="transcript">
