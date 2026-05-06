@@ -64,7 +64,7 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
 
         <!-- 微信扫码加群 · 次要视觉 (留白分隔 · 不用线) -->
         {config.qrcode_url && (
-          <div class="mt-10 lg:mt-14 w-full flex flex-col items-center">
+          <div class="mt-8 lg:mt-12 w-full flex flex-col items-center">
             <p class="text-xs lg:text-sm text-muted-foreground">{config.qrcode_label}</p>
             <img src={config.qrcode_url} alt="加群二维码" class="mt-3 lg:mt-4 w-32 h-32 lg:w-40 lg:h-40 rounded-xl border border-border opacity-90" />
           </div>
