@@ -1,0 +1,14 @@
+{
+  "name": "阿空小客",
+  "name_short": "小客",
+  "role": "C 端客服 + 反馈收集",
+  "role_long": "对其他 agent 不满意 / 提建议都来找我 · 我准确记下转开发",
+  "avatar": "xiaoke",
+  "accent": "#06b6d4",
+  "mp3_url": "intro-zh.mp3",
+  "chat_url": "https://chat.xiaoke.cs.agentaily.com/",
+  "cta_label": "跟小客提反馈 →",
+  "footer": "杭州阿空智能科技有限公司 · 浙ICP备2026022274号",
+  "qrcode_label": "长按识别二维码 · 加群",
+  "qrcode_sub": ""
+}

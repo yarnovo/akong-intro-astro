@@ -1,0 +1,14 @@
+{
+  "name": "阿空小知",
+  "name_short": "小知",
+  "role": "C 端个人知识管理 agent",
+  "role_long": "你说我编 · 一概念一节点 · markdown 互链 · 数据归你 · 不锁",
+  "avatar": "xiaozhi",
+  "accent": "#6366f1",
+  "mp3_url": "intro-zh.mp3",
+  "chat_url": "https://chat.xiaozhi.kb.agentaily.com/",
+  "cta_label": "跟小知聊聊 · 编你的知识库 →",
+  "footer": "杭州阿空智能科技有限公司 · 浙ICP备2026022274号",
+  "qrcode_label": "长按识别二维码 · 加群",
+  "qrcode_sub": ""
+}
