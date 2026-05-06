@@ -10,7 +10,6 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@akong/ui-react": "file:../akong-ui-react",
     "@astrojs/react": "^4.1.2",
     "@tailwindcss/vite": "^4.2.4",
     "astro": "^5.1.1",
