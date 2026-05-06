@@ -53,10 +53,10 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
           />
         </div>
 
-        <!-- 主 CTA · 最强视觉权重 -->
+        <!-- 主 CTA · 跟音频按钮同尺寸 (颜色已区分主次 · 不再字号区分) -->
         <a
           href={config.chat_url}
-          class="mt-6 lg:mt-9 inline-block px-9 py-4 bg-primary text-primary-foreground rounded-full text-lg font-semibold hover:opacity-95 active:scale-[0.98] shadow-lg hover:shadow-xl transition-all"
+          class="mt-5 lg:mt-8 inline-flex items-center px-6 py-2 bg-primary text-primary-foreground rounded-full text-base font-medium hover:opacity-95 active:scale-[0.98] shadow-sm hover:shadow transition-all min-h-[3.75rem]"
           data-testid="cta-chat"
         >
           {config.cta_label}
