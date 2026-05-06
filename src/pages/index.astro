@@ -53,20 +53,20 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
           />
         </div>
 
-        <!-- 主 CTA -->
+        <!-- 主 CTA · 最强视觉权重 -->
         <a
           href={config.chat_url}
-          class="mt-5 lg:mt-8 inline-block px-8 py-3.5 bg-primary text-primary-foreground rounded-full text-base font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
+          class="mt-6 lg:mt-9 inline-block px-9 py-4 bg-primary text-primary-foreground rounded-full text-lg font-semibold hover:opacity-95 active:scale-[0.98] shadow-lg hover:shadow-xl transition-all"
           data-testid="cta-chat"
         >
           {config.cta_label}
         </a>
 
-        <!-- 微信扫码加群 -->
+        <!-- 微信扫码加群 · 次要视觉 (不抢 CTA) -->
         {config.qrcode_url && (
           <div class="mt-8 pt-6 lg:mt-12 lg:pt-8 border-t border-border w-full flex flex-col items-center">
-            <p class="text-base font-medium">{config.qrcode_label}</p>
-            <img src={config.qrcode_url} alt="加群二维码" class="mt-3 lg:mt-4 w-36 h-36 lg:w-44 lg:h-44 rounded-xl border border-border" />
+            <p class="text-xs lg:text-sm text-muted-foreground">{config.qrcode_label}</p>
+            <img src={config.qrcode_url} alt="加群二维码" class="mt-3 lg:mt-4 w-32 h-32 lg:w-40 lg:h-40 rounded-xl border border-border opacity-90" />
           </div>
         )}
       </div>
