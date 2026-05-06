@@ -45,7 +45,7 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         <p class="mt-1.5 lg:mt-2 text-base lg:text-lg text-muted-foreground" data-testid="agent-role">{config.role}</p>
 
         <!-- 听音频 -->
-        <div class="mt-8 lg:mt-12">
+        <div class="mt-10 lg:mt-14">
           <AudioPlayer
             client:load
             src={config.mp3_url}
