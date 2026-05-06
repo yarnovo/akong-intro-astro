@@ -27,11 +27,12 @@ jobs:
       - name: Checkout astro template
         uses: actions/checkout@v4
 
-      - name: Download intro repo + akong-avatars (codeload tarball · 绕 git auth)
+      - name: Checkout intro repo via gh CLI (内置 GH_TOKEN · public repo 跨仓 OK)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          mkdir -p __intro __avatars
-          curl -sSL "https://codeload.github.com/yarnovo/${{ matrix.repo }}/tar.gz/main" | tar xz --strip-components=1 -C __intro
-          curl -sSL "https://codeload.github.com/yarnovo/akong-avatars/tar.gz/main" | tar xz --strip-components=1 -C __avatars
+          gh repo clone yarnovo/${{ matrix.repo }} __intro -- --depth 1
+          gh repo clone yarnovo/akong-avatars __avatars -- --depth 1
           echo "=== intro ===" && ls __intro
           echo "=== avatar ===" && ls __avatars/avatars | head -10
 
