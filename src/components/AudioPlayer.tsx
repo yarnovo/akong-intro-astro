@@ -25,7 +25,12 @@ export function AudioPlayer({ src, label, duration = "1 分钟" }: Props) {
   React.useEffect(() => {
     const a = audioRef.current
     if (!a) return
-    const onPlay = () => setPlaying(true)
+    const transcript = document.querySelector<HTMLDetailsElement>('[data-testid="transcript-toggle"]')
+    const onPlay = () => {
+      setPlaying(true)
+      // podcast 风: 播放即自动展开文字稿 (听+看 · Spotify/Apple Podcasts 同款)
+      if (transcript) transcript.open = true
+    }
     const onPause = () => setPlaying(false)
     const onEnded = () => setPlaying(false)
     a.addEventListener("play", onPlay)
