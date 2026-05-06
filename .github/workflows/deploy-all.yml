@@ -27,17 +27,13 @@ jobs:
       - name: Checkout astro template
         uses: actions/checkout@v4
 
-      - name: Checkout intro repo (config + audio)
-        uses: actions/checkout@v4
-        with:
-          repository: yarnovo/${{ matrix.repo }}
-          path: __intro
+      - name: Checkout intro repo (config + audio · public 无 token)
+        run: |
+          git clone --depth 1 https://github.com/yarnovo/${{ matrix.repo }}.git __intro
 
-      - name: Checkout akong-avatars (svg)
-        uses: actions/checkout@v4
-        with:
-          repository: yarnovo/akong-avatars
-          path: __avatars
+      - name: Checkout akong-avatars (svg · public 无 token)
+        run: |
+          git clone --depth 1 https://github.com/yarnovo/akong-avatars.git __avatars
 
       - name: Inject config + audio + transcript + avatar
         run: |
