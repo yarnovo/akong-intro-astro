@@ -17,8 +17,6 @@ const config = JSON.parse(fs.readFileSync(path.join(publicDir, "intro.config.jso
 
 const transcriptPath = path.join(publicDir, "transcript.md")
 const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPath, "utf-8") : ""
-const avatarPath = path.join(publicDir, "avatar.svg")
-const avatarSvg = fs.existsSync(avatarPath) ? fs.readFileSync(avatarPath, "utf-8") : ""
 ---
 
 <!doctype html>
@@ -32,9 +30,9 @@ const avatarSvg = fs.existsSync(avatarPath) ? fs.readFileSync(avatarPath, "utf-8
   </head>
   <body class="bg-background text-foreground">
     <main class="max-w-md mx-auto px-4 py-8 flex flex-col gap-6">
-      <!-- 头像 -->
+      <!-- 头像 (用 img 让浏览器自动 scale · 不 inline 防 SVG 内置 width=200 撑破容器) -->
       <div class="flex justify-center">
-        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-border" set:html={avatarSvg} />
+        <img src="/avatar.svg" alt={config.name} class="w-24 h-24 rounded-full border-2 border-border bg-card" />
       </div>
 
       <!-- 名 + 角色 -->
@@ -50,11 +48,17 @@ const avatarSvg = fs.existsSync(avatarPath) ? fs.readFileSync(avatarPath, "utf-8
         label={`听${config.name_short}的自我介绍`}
       />
 
-      <!-- 文字稿 -->
+      <!-- 文字稿 (默认收起 · HTML5 details 0 JS · 点击展开) -->
       {transcript && (
-        <div class="text-sm leading-relaxed text-foreground/85 whitespace-pre-line border-t border-border pt-4" data-testid="transcript">
-          {transcript}
-        </div>
+        <details class="border-t border-border pt-4" data-testid="transcript-toggle">
+          <summary class="text-sm text-muted-foreground cursor-pointer list-none flex items-center gap-1 select-none">
+            <span class="inline-block transition-transform group-open:rotate-90">▸</span>
+            <span>看文字稿 (听不方便时)</span>
+          </summary>
+          <div class="text-sm leading-relaxed text-foreground/85 whitespace-pre-line mt-3" data-testid="transcript">
+            {transcript}
+          </div>
+        </details>
       )}
 
       <!-- 主 CTA · 跳 chat -->
