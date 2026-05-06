@@ -41,13 +41,13 @@ export function AudioPlayer({ src, label, duration = "1 分钟" }: Props) {
   return (
     <button
       onClick={toggle}
-      className="inline-flex items-center gap-3 pl-1.5 pr-5 py-1.5 border border-border rounded-full bg-card hover:bg-muted active:scale-[0.98] shadow-sm hover:shadow transition-all"
+      className="inline-flex items-center gap-3 pl-2 pr-6 py-2 border border-border rounded-full bg-card hover:bg-muted active:scale-[0.98] shadow-sm hover:shadow transition-all"
       data-testid="audio-toggle"
     >
-      <span className="w-9 h-9 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
-        {playing ? <Pause className="size-4" /> : <Play className="size-4 ml-0.5" />}
+      <span className="w-11 h-11 rounded-full bg-primary text-primary-foreground flex items-center justify-center">
+        {playing ? <Pause className="size-5" /> : <Play className="size-5 ml-0.5" />}
       </span>
-      <span className="text-sm font-medium">{label} · {duration}</span>
+      <span className="text-base font-medium">{label} · {duration}</span>
       <audio ref={audioRef} src={src} preload="none" />
     </button>
   )

@@ -36,16 +36,16 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         <img
           src="/avatar.svg"
           alt={config.name}
-          class="w-20 h-20 lg:w-24 lg:h-24 rounded-full border overflow-hidden"
+          class="w-28 h-28 lg:w-32 lg:h-32 rounded-full border-2 overflow-hidden"
           style={`background: ${config.accent}1a; border-color: ${config.accent}4d;`}
         />
 
         <!-- 名 + 角色 -->
-        <h1 class="mt-3 lg:mt-5 text-xl lg:text-2xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
-        <p class="mt-1 lg:mt-1.5 text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
+        <h1 class="mt-4 lg:mt-6 text-2xl lg:text-3xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
+        <p class="mt-1.5 lg:mt-2 text-base lg:text-lg text-muted-foreground" data-testid="agent-role">{config.role}</p>
 
         <!-- 听音频 -->
-        <div class="mt-6 lg:mt-10">
+        <div class="mt-8 lg:mt-12">
           <AudioPlayer
             client:load
             src={config.mp3_url}
@@ -56,7 +56,7 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         <!-- 主 CTA -->
         <a
           href={config.chat_url}
-          class="mt-4 lg:mt-8 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
+          class="mt-5 lg:mt-8 inline-block px-8 py-3.5 bg-primary text-primary-foreground rounded-full text-base font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
           data-testid="cta-chat"
         >
           {config.cta_label}
@@ -64,9 +64,9 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
 
         <!-- 微信扫码加群 -->
         {config.qrcode_url && (
-          <div class="mt-7 pt-5 lg:mt-10 lg:pt-7 border-t border-border w-full flex flex-col items-center">
-            <p class="text-sm font-medium">{config.qrcode_label}</p>
-            <img src={config.qrcode_url} alt="加群二维码" class="mt-2 lg:mt-4 w-28 h-28 lg:w-36 lg:h-36 rounded-xl border border-border" />
+          <div class="mt-8 pt-6 lg:mt-12 lg:pt-8 border-t border-border w-full flex flex-col items-center">
+            <p class="text-base font-medium">{config.qrcode_label}</p>
+            <img src={config.qrcode_url} alt="加群二维码" class="mt-3 lg:mt-4 w-36 h-36 lg:w-44 lg:h-44 rounded-xl border border-border" />
           </div>
         )}
       </div>
