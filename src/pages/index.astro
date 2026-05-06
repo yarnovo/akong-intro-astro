@@ -29,8 +29,8 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
     <meta name="description" content={config.role_long} />
   </head>
   <body class="bg-background text-foreground">
-    <main class="max-w-xl mx-auto min-h-screen flex flex-col items-center justify-center px-6 py-16 gap-6 text-center">
-      <!-- 头像 (用 img 让浏览器自动 scale · accent 浅色衬底 + 描边 跟老板品牌 pill 调性一致) -->
+    <main class="max-w-xl mx-auto min-h-screen flex flex-col items-center px-6 py-16 text-center">
+      <!-- 头像 (identity 块) -->
       <img
         src="/avatar.svg"
         alt={config.name}
@@ -38,46 +38,46 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         style={`background: ${config.accent}1a; border-color: ${config.accent}4d;`}
       />
 
-      <!-- 名 + 角色 -->
-      <div class="text-center space-y-1">
-        <h1 class="text-2xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
-        <p class="text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
+      <!-- 名 + 角色 (跟头像紧贴 · 同 identity) -->
+      <h1 class="mt-5 text-2xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
+      <p class="mt-1.5 text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
+
+      <!-- 听音频 (跨 section · identity → action) -->
+      <div class="mt-10">
+        <AudioPlayer
+          client:load
+          src={config.mp3_url}
+          label={`听${config.name_short}的自我介绍`}
+        />
       </div>
 
-      <!-- 自介音频 (React island) -->
-      <AudioPlayer
-        client:load
-        src={config.mp3_url}
-        label={`听${config.name_short}的自我介绍`}
-      />
-
-      <!-- 文字稿 (Apple Podcasts 同款 · 直接淡灰小字显示) -->
+      <!-- 文字稿 (跟音频紧 · 同信息层) -->
       {transcript && (
-        <div class="w-full max-w-md text-left text-sm leading-relaxed text-muted-foreground whitespace-pre-line mt-2" data-testid="transcript">
+        <div class="mt-6 w-full max-w-md text-left text-sm leading-relaxed text-muted-foreground whitespace-pre-line" data-testid="transcript">
           {transcript}
         </div>
       )}
 
-      <!-- 主 CTA · pill 胶囊形跳 chat -->
+      <!-- 主 CTA (跟文字稿稍隔 · 决定行动) -->
       <a
         href={config.chat_url}
-        class="inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
+        class="mt-10 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
         data-testid="cta-chat"
       >
         {config.cta_label}
       </a>
 
-      <!-- 微信扫码加群 (config 有 qrcode_url 才渲染) -->
+      <!-- 微信扫码加群 (大间距 · 完全不同 section) -->
       {config.qrcode_url && (
-        <div class="flex flex-col items-center gap-2 mt-8 pt-8 border-t border-border w-full">
+        <div class="mt-16 pt-10 border-t border-border w-full flex flex-col items-center">
           <p class="text-sm font-medium">{config.qrcode_label}</p>
-          {config.qrcode_sub && <p class="text-xs text-muted-foreground">{config.qrcode_sub}</p>}
-          <img src={config.qrcode_url} alt="加群二维码" class="w-40 h-40 rounded-2xl border border-border mt-2" />
+          {config.qrcode_sub && <p class="mt-1 text-xs text-muted-foreground">{config.qrcode_sub}</p>}
+          <img src={config.qrcode_url} alt="加群二维码" class="mt-4 w-40 h-40 rounded-2xl border border-border" />
         </div>
       )}
 
-      <!-- footer -->
-      <footer class="text-xs text-muted-foreground/70 mt-12" data-testid="footer">
+      <!-- footer (远离 · 边角元素) -->
+      <footer class="mt-16 text-xs text-muted-foreground/70" data-testid="footer">
         {config.footer}
       </footer>
     </main>
