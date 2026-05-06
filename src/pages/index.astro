@@ -29,21 +29,21 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
     <meta name="description" content={config.role_long} />
   </head>
   <body class="bg-background text-foreground">
-    <main class="max-w-xl mx-auto min-h-screen flex flex-col items-center px-6 py-16 text-center">
-      <!-- 头像 (identity 块) -->
+    <main class="max-w-xl mx-auto min-h-[100dvh] flex flex-col items-center px-6 py-5 text-center">
+      <!-- 头像 (identity 块 · 紧凑) -->
       <img
         src="/avatar.svg"
         alt={config.name}
-        class="w-24 h-24 rounded-full border overflow-hidden"
+        class="w-20 h-20 rounded-full border overflow-hidden"
         style={`background: ${config.accent}1a; border-color: ${config.accent}4d;`}
       />
 
-      <!-- 名 + 角色 (跟头像紧贴 · 同 identity) -->
-      <h1 class="mt-5 text-2xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
-      <p class="mt-1.5 text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
+      <!-- 名 + 角色 -->
+      <h1 class="mt-3 text-xl font-semibold tracking-tight" data-testid="agent-name">{config.name}</h1>
+      <p class="mt-1 text-sm text-muted-foreground" data-testid="agent-role">{config.role}</p>
 
-      <!-- 听音频 (跨 section · identity → action) -->
-      <div class="mt-10">
+      <!-- 听音频 -->
+      <div class="mt-6">
         <AudioPlayer
           client:load
           src={config.mp3_url}
@@ -51,26 +51,25 @@ const transcript = fs.existsSync(transcriptPath) ? fs.readFileSync(transcriptPat
         />
       </div>
 
-      <!-- 主 CTA (跟音频自然衔接 · 听完→聊) -->
+      <!-- 主 CTA -->
       <a
         href={config.chat_url}
-        class="mt-8 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
+        class="mt-4 inline-block px-7 py-3 bg-primary text-primary-foreground rounded-full text-sm font-medium hover:opacity-90 active:scale-[0.98] shadow-sm hover:shadow transition-all"
         data-testid="cta-chat"
       >
         {config.cta_label}
       </a>
 
-      <!-- 微信扫码加群 (大间距 · 完全不同 section) -->
+      <!-- 微信扫码加群 -->
       {config.qrcode_url && (
-        <div class="mt-16 pt-10 border-t border-border w-full flex flex-col items-center">
+        <div class="mt-7 pt-5 border-t border-border w-full flex flex-col items-center">
           <p class="text-sm font-medium">{config.qrcode_label}</p>
-          {config.qrcode_sub && <p class="mt-1 text-xs text-muted-foreground">{config.qrcode_sub}</p>}
-          <img src={config.qrcode_url} alt="加群二维码" class="mt-4 w-40 h-40 rounded-2xl border border-border" />
+          <img src={config.qrcode_url} alt="加群二维码" class="mt-2 w-28 h-28 rounded-xl border border-border" />
         </div>
       )}
 
-      <!-- footer (远离 · 边角元素) -->
-      <footer class="mt-16 text-xs text-muted-foreground/70" data-testid="footer">
+      <!-- footer · 推到底 -->
+      <footer class="mt-auto pt-4 text-[10px] text-muted-foreground/70" data-testid="footer">
         {config.footer}
       </footer>
     </main>
