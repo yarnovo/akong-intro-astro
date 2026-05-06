@@ -12,7 +12,7 @@ interface Props {
   duration?: string
 }
 
-export function AudioPlayer({ src, label, duration = "1 分钟" }: Props) {
+export function AudioPlayer({ src, label, duration = "30 秒" }: Props) {
   const audioRef = React.useRef<HTMLAudioElement>(null)
   const [playing, setPlaying] = React.useState(false)
 
